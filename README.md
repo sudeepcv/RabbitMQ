@@ -3,7 +3,7 @@
 
 
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](http://gitpod.io/#https://github.com/sudeepcv/spring-cloud-microservice-docker)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://github.com/sudeepcv/RabbitMQ)
 
 
 
