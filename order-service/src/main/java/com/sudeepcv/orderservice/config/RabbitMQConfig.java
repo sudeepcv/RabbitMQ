@@ -1,7 +1,9 @@
 package com.sudeepcv.orderservice.config;
 
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -24,6 +26,8 @@ public class RabbitMQConfig {
 
     @Value("${rabbitmq.queue.email.name}")
     private String emailQueue;
+    @Value("${spring.rabbitmq.host}")
+    private String host;
 
     @Bean
     public Queue orderQueue(){
@@ -64,5 +68,15 @@ public class RabbitMQConfig {
         rabbitTemplate.setMessageConverter(converter());
         return rabbitTemplate;
     }
+    @Bean
+    public CachingConnectionFactory connectionFactory() {
+        return new CachingConnectionFactory(host);
+    }
+    @Bean
+    public RabbitAdmin amqpAdmin() {
+        return new RabbitAdmin(connectionFactory());
+    }
+
+
 }
 
