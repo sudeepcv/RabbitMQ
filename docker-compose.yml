@@ -1,0 +1,60 @@
+version: "3"
+services:
+  rabbitmq:
+    build:
+      context: .
+      dockerfile: Dockerfile-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15671:15671"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    networks:
+        - mynetwork
+    expose:
+        - 5672
+        - 15671
+        - 15672
+
+  email-service:
+    build:
+      context: .
+      dockerfile: Dockerfile-email-service
+    networks:
+      - mynetwork
+    restart: on-failure
+    ports:
+      - 8082:8082
+    expose:
+      - 8082
+
+  order-service:
+    build:
+      context: .
+      dockerfile: Dockerfile-order-service
+    networks:
+      - mynetwork
+    restart: on-failure
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+
+
+  stock-service:
+    build:
+      context: .
+      dockerfile: Dockerfile-stock-service
+    networks:
+      - mynetwork
+    restart: on-failure
+    ports:
+      - 8081:8081
+    expose:
+      - 8081
+
+networks:
+  mynetwork:
+    driver: bridge

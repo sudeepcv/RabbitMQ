@@ -1,0 +1,13 @@
+# syntax=docker/dockerfile:1
+FROM openjdk:20-ea-17-jdk-oracle
+#working directory
+WORKDIR /app
+#copy from your Host(PC, laptop) to container
+COPY email-service/.mvn/ .mvn
+COPY email-service/mvnw email-service/pom.xml ./
+#Run this inside the image
+#RUN ./mvnw dependency:go-offline
+COPY email-service/src ./src
+#run inside container
+CMD ["./mvnw", "clean"]
+CMD ["./mvnw", "spring-boot:run"]
